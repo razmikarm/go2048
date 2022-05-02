@@ -2,13 +2,29 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"strings"
 
 	"github.com/eiannone/keyboard"
 )
 
-var brick = "*" //"█"
+var brick = "*"      //"█"
+var lineSep string   //= strings.Repeat(brick, 29)
+var lineSpace string //= strings.Repeat(brick+"      ", 4) + brick
 
 func main() {
+
+	if len(os.Args) > 1 {
+		if len(os.Args[1]) > 1 {
+			fmt.Println("Enter one character to fill borders")
+			return
+		} else {
+			brick = os.Args[1]
+		}
+	}
+
+	lineSep = strings.Repeat(brick, 29)
+	lineSpace = strings.Repeat(brick+"      ", 4) + brick
 
 	board := initBoard()
 	draw(board)

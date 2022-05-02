@@ -3,11 +3,7 @@ package main
 import (
 	"fmt"
 	"strconv"
-	"strings"
 )
-
-var lineSep = strings.Repeat(brick, 29)
-var lineSpace = strings.Repeat(brick+"      ", 4) + brick
 
 func center(v int, w int) string {
 	s := strconv.Itoa(v)
