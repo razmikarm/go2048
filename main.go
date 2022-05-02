@@ -4,18 +4,19 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/eiannone/keyboard"
 )
 
-var brick = "*"      //"█"
+var brick = "█"
 var lineSep string   //= strings.Repeat(brick, 29)
 var lineSpace string //= strings.Repeat(brick+"      ", 4) + brick
 
 func main() {
 
 	if len(os.Args) > 1 {
-		if len(os.Args[1]) > 1 {
+		if utf8.RuneCountInString(os.Args[1]) > 1 {
 			fmt.Println("Enter one character to fill borders")
 			return
 		} else {

@@ -6,7 +6,10 @@ import (
 )
 
 func center(v int, w int) string {
-	s := strconv.Itoa(v)
+	s := " "
+	if v != 0 {
+		s = strconv.Itoa(v)
+	}
 	return fmt.Sprintf("\033[1m%*s\033[0m", -w, fmt.Sprintf("%*s", (w+len(s))/2, s))
 }
 
