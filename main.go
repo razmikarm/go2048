@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"strings"
 	"time"
 	"unicode/utf8"
 
@@ -12,6 +13,7 @@ import (
 
 func main() {
 
+	brick = "█"
 	rand.Seed(time.Now().UnixMicro())
 	if len(os.Args) > 1 {
 		if utf8.RuneCountInString(os.Args[1]) > 1 {
@@ -21,6 +23,8 @@ func main() {
 			brick = os.Args[1]
 		}
 	}
+	lineSep = strings.Repeat(brick, 29)
+	linePad = strings.Repeat(brick+"      ", 4) + brick
 
 	b := NewBoard(4)
 	b.add()

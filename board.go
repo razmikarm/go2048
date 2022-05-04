@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
-	"strings"
 )
 
 // Main game board
@@ -15,10 +14,6 @@ type board struct {
 
 // Generates new board
 func NewBoard(size int) (nb board) {
-	brick = "█"
-	lineSep = strings.Repeat(brick, 29)
-	linePad = strings.Repeat(brick+"      ", 4) + brick
-
 	nb.size = size
 	nb.lines = make([]*line, 0, size)
 	for i := 0; i < size; i++ {
@@ -110,6 +105,7 @@ func (b *board) score() (s int) {
 // Draws board in CLI
 func (b *board) draw() {
 	clearCLI()
+	fmt.Println()
 	fmt.Println(lineSep)
 	for _, l := range b.lines {
 		l.draw()
