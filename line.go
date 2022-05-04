@@ -11,49 +11,69 @@ var linePad string
 // Basic line that board consists of
 type line struct {
 	items []int
-	score int
 }
+
+// Generates new line and
+// returns a pointer to it
+func NewLine(size int) *line {
+	return &line{make([]int, size)}
+}
+
+/*---------------------------------------------------*/
+/*-----------| HERE GOES THE ENGINE PART |-----------*/
+/*---------------------------------------------------*/
 
 // Moves elements to the Left
 func (l *line) move() {
 	cursor := 0
+	nl := NewLine(len(l.items))
 	for _, v := range l.items {
 		if v != 0 {
-			if l.items[cursor] == 0 {
-				l.items[cursor] = v
-			} else if v == l.items[cursor] {
-				l.items[cursor] *= 2
+			if nl.items[cursor] == 0 {
+				nl.items[cursor] = v
+			} else if v == nl.items[cursor] {
+				nl.items[cursor] *= 2
 				cursor += 1
 			} else {
 				cursor += 1
-				l.items[cursor] = v
+				nl.items[cursor] = v
 			}
 		}
 	}
-	l.score = 0
-	for _, v := range l.items {
-		l.score += v
-	}
+	*l = *nl
 }
 
 //Reverses line items without changing the original line
 func (l *line) reversed() line {
 	c := len(l.items)
-	nl := line{make([]int, c), 0}
+	nl := NewLine(c)
 	for i := 0; i < c/2; i++ {
 		nl.items[i], nl.items[c-i-1] = l.items[c-i-1], l.items[i]
 	}
-	return nl
+	return *nl
 }
 
 // Moves elements to the Right
 func (l *line) reverseMove() {
 	nl := l.reversed()
 	nl.move()
-	l.items = l.reversed().items
+	*l = nl.reversed()
 }
 
-func (l *line) show() {
+/*---------------------------------------------------*/
+/*-----------| HERE ENDS THE ENGINE PART |-----------*/
+/*---------------------------------------------------*/
+
+// Returns line score
+func (l *line) score() (s int) {
+	for _, v := range l.items {
+		s += v
+	}
+	return
+}
+
+// Draws line in CLI
+func (l *line) draw() {
 	fmt.Println(linePad)
 	fmt.Print(brick)
 	for _, v := range l.items {

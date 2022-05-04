@@ -2,19 +2,17 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"os"
-	"strings"
+	"time"
 	"unicode/utf8"
 
 	"github.com/eiannone/keyboard"
 )
 
-var brick = "█"
-var lineSep string   //= strings.Repeat(brick, 29)
-var lineSpace string //= strings.Repeat(brick+"      ", 4) + brick
-
 func main() {
 
+	rand.Seed(time.Now().UnixMicro())
 	if len(os.Args) > 1 {
 		if utf8.RuneCountInString(os.Args[1]) > 1 {
 			fmt.Println("Enter one character to fill borders")
@@ -24,32 +22,30 @@ func main() {
 		}
 	}
 
-	lineSep = strings.Repeat(brick, 29)
-	lineSpace = strings.Repeat(brick+"      ", 4) + brick
-
-	board := initBoard()
-	draw(board)
+	b := NewBoard(4)
+	b.add()
+	b.draw()
 
 	_, key, err := keyboard.GetSingleKey()
 	for ; err == nil; _, key, err = keyboard.GetSingleKey() {
 		switch key {
 		case 0xffea:
-			toRight(board)
+			b.toRight()
 		case 0xffeb:
-			toLeft(board)
+			b.toLeft()
 		case 0xffec:
-			toDown(board)
+			b.toDown()
 		case 0xffed:
-			toUp(board)
+			b.toUp()
 		case 0x3:
-			clear()
+			clearCLI()
 			return
 		default:
 			continue
 		}
-		addNew(board)
-		draw(board)
+		b.add()
+		b.draw()
 	}
-	clear()
+	clearCLI()
 	fmt.Println(err)
 }
