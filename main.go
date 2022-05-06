@@ -11,7 +11,7 @@ import (
 	"github.com/eiannone/keyboard"
 )
 
-func main() {
+func init() {
 
 	brick = "█"
 	rand.Seed(time.Now().UnixMicro())
@@ -25,6 +25,10 @@ func main() {
 	}
 	lineSep = strings.Repeat(brick, 29)
 	linePad = strings.Repeat(brick+"      ", 4) + brick
+
+}
+
+func main() {
 
 	b := NewBoard(4)
 	b.add()
